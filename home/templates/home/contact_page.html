@@ -27,9 +27,24 @@
     }
 
     .contact-infos {
+        background: white;
+        border-radius: 1rem;
+        padding: 1.5rem;
+        border: 1px solid #e5e7eb;
         font-size: 0.95rem;
-        color: #4b5563;
+        color: #1f2933;
     }
+
+    .contact-horaires {
+        background: white;
+        border-radius: 1rem;
+        padding: 1.5rem;
+        border: 1px solid #e5e7eb;
+        font-size: 0.95rem;
+        color: #1f2933;
+        margin-top: 30px;
+    }
+
 
     .contact-card {
         background: white;
@@ -61,6 +76,49 @@
     .contact-textarea {
         resize: vertical;
     }
+   /* Style général pour les champs du formulaire Wagtail */
+    form p {
+        margin-bottom: 1rem;
+    }
+
+    form label {
+        display: block;
+        font-size: 0.9rem;
+        margin-bottom: 0.35rem;
+        font-weight: 500;
+        color: #374151;
+    }
+
+    /* Style inputs et textarea */
+    form input[type="text"],
+    form input[type="email"],
+    form input[type="tel"],
+    form textarea,
+    form select {
+        width: 100%;
+        padding: 0.6rem 0.75rem;
+        border-radius: 0.75rem;
+        border: 1px solid #d1d5db;
+        font-size: 0.9rem;
+        font-family: inherit;
+        background: white;
+    }
+
+    /* Effet focus */
+    form input:focus,
+    form textarea:focus,
+    form select:focus {
+        outline: none;
+        border-color: #2563eb;
+        box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+    }
+
+    /* Unifier le bouton si Django génère un <input type="submit"> */
+    form input[type="submit"] {
+        margin-top: 1rem;
+    }
+
+
 
     /* =======================
        Version mobile
@@ -90,7 +148,7 @@
         <div class="contact-grid">
             <!-- Infos de contact -->
             <div>
-                <h2 style="font-size:1.15rem; margin-bottom:0.75rem;">Nous écrire</h2>
+                <h2 style="font-size:1.15rem; margin-bottom:0.75rem;">✍️Nous écrire</h2>
 
                 {% if page.contact_text %}
                     {{ page.contact_text|richtext }}
@@ -101,38 +159,51 @@
                 {% endif %}
 
                 <p class="contact-infos">
-                    <strong>Email :</strong>
+                    <strong>&#128231 Email :</strong>
                     {{ page.contact_email|default:"contact@monsitepro.fr" }}<br>
 
                     {% if page.contact_phone %}
-                        <strong>Téléphone :</strong> {{ page.contact_phone }}<br>
+                    <strong>&#128222 Téléphone :</strong> {{ page.contact_phone }}<br>
                     {% else %}
-                        <strong>Téléphone :</strong> +33 6 12 34 56 78<br>
+                        <p><strong>&#128222 Téléphone :</strong> +33 6 12 34 56 78<br></p>
                     {% endif %}
 
-                    <strong>Adresse :</strong>
+                    <strong>&#x1F4CC Adresse :</strong>
                     {{ page.contact_address|default:"123 Rue de l’Exemple, 75000 Paris" }}
                 </p>
             </div>
+           <div class="contact-horaires">
+                <h3 class="contact-heading">&#x1F550 Horaires d'ouverture</h3>
+                <p>Lundi - Vendredi : 9h00 - 18h00</p>
+                <p>Samedi : 10h00 - 16h00</p>
+                <p>Dimanche : Fermé</p>
 
-            <!-- Formulaire de contact (non fonctionnel pour l'instant) -->
+               <!-- ESPACE VISUEL -->
+            <div style="margin-bottom: 2rem;"></div>
+
+                <h3 class="contact-heading">Permanences sans rendez-vous :</h3>
+                <p>Tous les mercredis de 14h à 17h</p>
+
+            </div>
+
+            <div style="margin-top:1.5rem;"></div>
+            </div> 
+
+            
+            <!-- Formulaire de contact Wagtail (fonctionnel) -->
             <div class="contact-card">
-                <form action="#" method="post">
-                    {# En vrai avec Django/Wagtail : csrf_token, Form, etc. #}
-                    <div class="contact-form-group">
-                        <label for="id_name" class="contact-label">Nom complet</label>
-                        <input id="id_name" name="name" type="text" required class="contact-input">
-                    </div>
+                <form action="{% pageurl page %}" method="post">
+                    {% csrf_token %}
 
-                    <div class="contact-form-group">
-                        <label for="id_email" class="contact-label">Email</label>
-                        <input id="id_email" name="email" type="email" required class="contact-input">
-                    </div>
+                    {# Affichage des erreurs globales #}
+                    {% if form.non_field_errors %}
+                        <div class="form-errors">
+                            {{ form.non_field_errors }}
+                        </div>
+                    {% endif %}
 
-                    <div class="contact-form-group">
-                        <label for="id_message" class="contact-label">Message</label>
-                        <textarea id="id_message" name="message" rows="4" required class="contact-textarea"></textarea>
-                    </div>
+                    {# Affichage des champs créés dans l'admin Wagtail #}
+                    {{ form.as_p }}
 
                     <button type="submit" class="btn-primary">
                         Envoyer le message
