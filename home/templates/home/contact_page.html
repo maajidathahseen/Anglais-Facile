@@ -133,6 +133,7 @@
             grid-template-columns: 1fr;
         }
     }
+    
 </style>
 
 <section class="contact-section">
@@ -171,25 +172,25 @@
                     <strong>&#x1F4CC Adresse :</strong>
                     {{ page.contact_address|default:"123 Rue de l’Exemple, 75000 Paris" }}
                 </p>
+
+                <div class="contact-horaires">
+                    <h3 class="contact-heading">&#x1F550 Horaires d'ouverture</h3>
+                    <p>Lundi - Vendredi : 9h00 - 18h00</p>
+                    <p>Samedi : 10h00 - 16h00</p>
+                    <p>Dimanche : Fermé</p>
+
+                    <!-- ESPACE VISUEL -->
+                    <div style="margin-bottom: 2rem;"></div>
+
+                        <h3 class="contact-heading">Permanences sans rendez-vous :</h3>
+                        <p>Tous les mercredis de 14h à 17h</p>
+
+                    </div>
+
+                    <div style="margin-top:1.5rem;"></div>
+                </div> 
             </div>
-           <div class="contact-horaires">
-                <h3 class="contact-heading">&#x1F550 Horaires d'ouverture</h3>
-                <p>Lundi - Vendredi : 9h00 - 18h00</p>
-                <p>Samedi : 10h00 - 16h00</p>
-                <p>Dimanche : Fermé</p>
 
-               <!-- ESPACE VISUEL -->
-            <div style="margin-bottom: 2rem;"></div>
-
-                <h3 class="contact-heading">Permanences sans rendez-vous :</h3>
-                <p>Tous les mercredis de 14h à 17h</p>
-
-            </div>
-
-            <div style="margin-top:1.5rem;"></div>
-            </div> 
-
-            
             <!-- Formulaire de contact Wagtail (fonctionnel) -->
             <div class="contact-card">
                 <form action="{% pageurl page %}" method="post">
