@@ -179,23 +179,89 @@
             color: #141414;
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .nav {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.75rem;
-            }
+    /* Styles par défaut (pour DESKTOP et plus) */
+    .nav-links {
+        /* Assurez-vous que les liens sont affichés en ligne sur desktop */
+        display: flex; 
+        gap: 1.5rem;
+        font-size: 0.95rem;
+    }
 
-            .nav-links {
-                flex-wrap: wrap;
-            }
+    /* --------------------------------- */
+    /* NOUVEAU CSS : Checkbox Toggle */
+    /* --------------------------------- */
 
-            .footer-top {
-                flex-direction: column;
-            }
+    /* 1. Cache le bouton hamburger sur desktop et affiche les liens */
+    .menu-toggle-input,
+    .menu-toggle {
+        display: none;
+    }
+
+    /* --------------------------------- */
+    /* RESPONSIVE : Menu Mobile à 768px */
+    /* --------------------------------- */
+    @media (max-width: 768px) {
+        .nav {
+            /* Assurez-vous que le logo et le bouton sont alignés */
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.5rem;
         }
+        
+        /* 2. Affiche le bouton Hamburger et cache la checkbox */
+        .menu-toggle {
+            display: block; 
+            font-size: 2rem;
+            cursor: pointer;
+            color: #1f2933;
+            line-height: 1;
+            z-index: 20;
+        }
+
+        /* 3. Cacher la navigation par défaut sur mobile (initialisation) */
+        .nav-links {
+            display: none; /* Cacher le menu */
+            flex-direction: column;
+            position: absolute;
+            top: 100%; 
+            left: 0;
+            width: 100%;
+            background-color: white; 
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 15;
+            border-top: 1px solid #e5e7eb;
+        }
+        
+        /* 4. LA MAGIE PURE CSS : AFFICHE LE MENU LORSQUE LA CHECKBOX EST COCHÉE */
+        /*
+        * Si la case à cocher (input#menu-toggle-input) est :checked
+        * ALORS cible le frère suivant (le sélecteur de frère général ~)
+        * qui a la classe .nav-links et applique display: flex.
+        */
+        .menu-toggle-input:checked ~ .nav-links {
+            display: flex; 
+        }
+
+        /* 5. Styles des liens du menu mobile (pour la lisibilité) */
+        .nav-links a {
+            padding: 1rem 1.5rem;
+            width: 100%;
+            border-bottom: 1px solid #f5f7fa; 
+        }
+
+        .nav-links a:hover {
+            background-color: #f5f7fa;
+        }
+
+        /* Le reste de vos media queries (footer, etc.) peut rester */
+        .footer-top {
+            flex-direction: column;
+        }
+    }
     </style>
+
+    
 </head>
 <body>
 
@@ -203,11 +269,15 @@
     <div class="container">
         <nav class="nav">
             <div class="logo">
-                <!-- Logo / Nom du site -->
                 Anglais<span style="color:#d4183d;">Facile</span>
             </div>
-            <div class="nav-links">
-                <!-- Rappel navigation header (liens vers les pages principales) -->
+            
+            <input type="checkbox" id="menu-toggle-input" class="menu-toggle-input" aria-controls="mobile-nav-links" hidden>
+            
+            <label for="menu-toggle-input" class="menu-toggle" aria-label="Toggle navigation">
+                &#9776; </label>
+            
+            <div class="nav-links" id="mobile-nav-links">
                 <a href="/">Accueil</a>
                 <a href="/nos-formations/">Nos formations</a>
                 <a href="/a-propos/">À propos</a>

@@ -190,10 +190,30 @@
         font-size: 0.95rem;
     }
 
-    /* =======================
-       Version mobile (téléphone)
-       ======================= */
+    /* Remplacement de votre règle de grille existante pour une meilleure clarté/priorité */
+    .formations-grid {
+        display: grid;
+        /* Utilisation de 3 colonnes pour les grands écrans */
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+        margin-top: 2rem;
+    }
 
+    /* =======================
+    2. Styles Responsifs (Media Queries)
+    ======================= */
+
+    /* 2.1. Adaptabilité pour les Tablettes (jusqu'à 992px) */
+    @media (max-width: 992px) {
+        /* Deux colonnes pour la grille des formations sur tablette */
+        .formations-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px; /* Légère réduction du gap */
+        }
+    }
+
+
+    /* 2.2. Adaptabilité pour les Mobiles (jusqu'à 768px) */
     @media (max-width: 768px) {
         .hero {
             min-height: 60vh;
@@ -201,6 +221,7 @@
 
         .hero-content {
             padding: 2rem 1.25rem 3rem;
+            /* Centre le contenu principal sur mobile pour une meilleure lisibilité */
             text-align: center;
         }
 
@@ -209,19 +230,26 @@
         }
 
         .hero-actions {
+            /* Alignement des boutons en colonne pour une meilleure ergonomie mobile */
             flex-direction: column;
             align-items: center;
             gap: 0.8rem;
         }
+    }
 
+    /* 2.3. Adaptabilité pour les petits Mobiles (jusqu'à 576px) */
+    @media (max-width: 576px) {
+        /* Une seule colonne sur les petits téléphones */
         .formations-grid {
             grid-template-columns: 1fr;
         }
 
-        .home-formations {
-            padding: 2.5rem 0;
+        /* Le titre du Hero peut être ajusté un peu plus */
+        .hero-title {
+            font-size: 1.8rem;
         }
     }
+    
 </style>
 
 <!-- Hero plein écran avec image + texte + call to action -->
