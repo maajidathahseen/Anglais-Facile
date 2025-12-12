@@ -138,72 +138,71 @@
 
 <section class="contact-section">
     <div class="container">
-        <!-- Titre et sous-titre depuis le modèle ContactPage -->
+
         <h1 class="section-title">
             {{ page.intro_title|default:"Contact" }}
         </h1>
+
         <p class="section-subtitle">
             {{ page.intro_subtitle|default:"Utilisez cette page pour permettre à vos visiteurs de vous écrire facilement." }}
         </p>
 
         <div class="contact-grid">
-            <!-- Infos de contact -->
+
+            <!-- ============================
+                 COLONNE GAUCHE — INFOS
+            ============================= -->
             <div>
-                <h2 style="font-size:1.15rem; margin-bottom:0.75rem;">✍️Nous écrire</h2>
+                <div class="contact-intro-text">
+                    <h2 style="font-size:1.15rem; margin-bottom:0.75rem;">✍️ Nous écrire</h2>
 
-                {% if page.contact_text %}
-                    {{ page.contact_text|richtext }}
-                {% else %}
-                    <p class="contact-intro-text">
-                        Ce formulaire peut vous servir de base pour une vraie page contact. Vous pourrez ensuite le relier à un modèle Wagtail ou à un système d’envoi d’email.
-                    </p>
-                {% endif %}
+                    {% if page.contact_text %}
+                        {{ page.contact_text|richtext }}
+                    {% else %}
+                        <p>
+                            Ce formulaire peut vous servir de base pour une vraie page contact.
+                        </p>
+                    {% endif %}
+                </div>
 
-                <p class="contact-infos">
-                    <strong>&#128231 Email :</strong>
-                    {{ page.contact_email|default:"contact@monsitepro.fr" }}<br>
+                <div class="contact-infos">
+                    <p><strong>📧 Email :</strong> {{ page.contact_email|default:"contact@monsitepro.fr" }}</p>
 
                     {% if page.contact_phone %}
-                    <strong>&#128222 Téléphone :</strong> {{ page.contact_phone }}<br>
+                        <p><strong>📞 Téléphone :</strong> {{ page.contact_phone }}</p>
                     {% else %}
-                        <p><strong>&#128222 Téléphone :</strong> +33 6 12 34 56 78<br></p>
+                        <p><strong>📞 Téléphone :</strong> +33 6 12 34 56 78</p>
                     {% endif %}
 
-                    <strong>&#x1F4CC Adresse :</strong>
-                    {{ page.contact_address|default:"123 Rue de l’Exemple, 75000 Paris" }}
-                </p>
+                    <p><strong>📍 Adresse :</strong> {{ page.contact_address|default:"123 Rue de l’Exemple, 75000 Paris" }}</p>
+                </div>
 
                 <div class="contact-horaires">
-                    <h3 class="contact-heading">&#x1F550 Horaires d'ouverture</h3>
+                    <h3 class="contact-heading">🕒 Horaires d'ouverture</h3>
                     <p>Lundi - Vendredi : 9h00 - 18h00</p>
                     <p>Samedi : 10h00 - 16h00</p>
                     <p>Dimanche : Fermé</p>
 
-                    <!-- ESPACE VISUEL -->
-                    <div style="margin-bottom: 2rem;"></div>
+                    <div style="margin: 1.5rem 0;"></div>
 
-                        <h3 class="contact-heading">Permanences sans rendez-vous :</h3>
-                        <p>Tous les mercredis de 14h à 17h</p>
-
-                    </div>
-
-                    <div style="margin-top:1.5rem;"></div>
-                </div> 
+                    <h3 class="contact-heading">Permanences sans rendez-vous :</h3>
+                    <p>Mercredi : 14h00 - 17h00</p>
+                </div>
             </div>
 
-            <!-- Formulaire de contact Wagtail (fonctionnel) -->
+            <!-- ============================
+                 COLONNE DROITE — FORMULAIRE
+            ============================= -->
             <div class="contact-card">
                 <form action="{% pageurl page %}" method="post">
                     {% csrf_token %}
 
-                    {# Affichage des erreurs globales #}
                     {% if form.non_field_errors %}
                         <div class="form-errors">
                             {{ form.non_field_errors }}
                         </div>
                     {% endif %}
 
-                    {# Affichage des champs créés dans l'admin Wagtail #}
                     {{ form.as_p }}
 
                     <button type="submit" class="btn-primary">
@@ -211,7 +210,9 @@
                     </button>
                 </form>
             </div>
+
         </div>
     </div>
 </section>
+
 {% endblock %}
